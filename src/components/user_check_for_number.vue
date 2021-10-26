@@ -3,14 +3,17 @@
     <div style="margin-top:10px;margin-bottom:10px;">
       请输入从经销商处得到的工单代码(bill code)：
       <input type="text" v-model="inputSome" style="width:300px;" />
-      <el-button type="text" @click="checkForData" style="margin-left:20px"
+      <el-button type="primary" @click="checkForData" style="margin-left:20px"
         >查询分属手机号码</el-button
       >
     </div>
     <div v-if="this.selectRow" style="margin-top:10px;margin-bottom:10px">
       当前选定手机号码：{{ this.selectRow.phone_number }}
-      <el-button type="text" @click="checkForData" style="margin-left:20px"
-        >查询该手机号码短信</el-button
+      <el-button
+        type="primary"
+        @click="jumpToSMSCheck(inputSome, selectRow.phone_number)"
+        style="margin-left:20px"
+        >一键查询该手机号码短信</el-button
       >
     </div>
     <el-dialog border title="提示" :visible.sync="dialogVisible" width="30%">
@@ -41,7 +44,7 @@
 import ajax from "../ajax.js";
 import params from "../golbal";
 export default {
-  name: "BasicContainer",
+  name: "checkForPhoneNumber",
   data() {
     return {
       inputSome: "",
@@ -52,6 +55,12 @@ export default {
       selectRow: null,
     };
   },
+  mounted() {
+    let billCodeFromCookies = this.$cookies.get("billCode");
+    if (billCodeFromCookies) {
+      this.inputSome = billCodeFromCookies;
+    }
+  },
   methods: {
     checkForData() {
       if (this.dialogVisible == false) {
@@ -60,6 +69,7 @@ export default {
         this.dialogVisible = true;
         this.selectRow = null;
       }
+      this.$cookies.set("billCode", this.inputSome, "30d");
       ajax({
         methods: "GET",
         url: params.api_query_phone_number,
@@ -87,11 +97,17 @@ export default {
     },
     radioChangeEvent({ row }) {
       this.selectRow = row;
-      console.log("单选事件");
     },
-    clearRadioRowEvent() {
-      this.selectRow = null;
-      this.$refs.xTable1.clearRadioRow();
+    jumpToSMSCheck(billCode, businessPhoneNumber) {
+      this.$cookies.set("billCode", billCode, "30d");
+      this.$cookies.set("businessPhoneNumber", businessPhoneNumber, "30d");
+      this.$router.push({
+        name: "user_check_for_sms",
+        params: {
+          billCode,
+          businessPhoneNumber,
+        },
+      });
     },
   },
 };

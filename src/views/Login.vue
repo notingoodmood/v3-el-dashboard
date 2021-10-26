@@ -99,7 +99,8 @@ export default {
           switch (res.statusCode) {
             case 0: {
               let token = res.data.token;
-              this.$cookies.set("token", token, "1d");
+              this.$cookies.set("token", token, "30d");
+              this.$cookies.set("type", "管理员", "30d");
               this.$router.push("/Home");
               break;
             }
@@ -114,7 +115,7 @@ export default {
       });
     },
     logInAsUser() {
-      this.$cookies.set("token", "user", "1d");
+      this.$cookies.set("type", "用户", "30d");
       this.$router.push("/Home");
     },
   },
