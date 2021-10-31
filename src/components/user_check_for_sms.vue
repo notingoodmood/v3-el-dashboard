@@ -92,9 +92,10 @@ export default {
         url: params.api_query_sms_by_bill,
         data: {
           bill_code: this.billCode,
-          phone_number: this.businessPhoneNumber,
+          phone_number: encodeURIComponent(this.businessPhoneNumber),
         },
         success: (res) => {
+          console.log(JSON.stringify(res));
           if (res.statusCode === 0) {
             this.dialogVisible = false;
             for (let data of res.data.list) {

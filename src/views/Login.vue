@@ -116,6 +116,7 @@ export default {
     },
     logInAsUser() {
       this.$cookies.set("type", "用户", "30d");
+      this.$cookies.remove("token");
       this.$router.push("/Home");
     },
   },

@@ -9,24 +9,6 @@ export default [
     },
     sub: [
       {
-        name: "BasicLayout",
-        meta: {
-          index: `/Home/BasicLayout`,
-          title: "基本布局",
-          type: "menu",
-          active: false,
-        },
-      },
-      {
-        name: "BasicContainer",
-        meta: {
-          index: `/Home/BasicContainer`,
-          title: "基本容器",
-          type: "menu",
-          active: false,
-        },
-      },
-      {
         name: "user_check_for_number",
         meta: {
           index: `/Home/user_check_for_number`,
@@ -49,15 +31,15 @@ export default [
   {
     name: "Form",
     meta: {
-      title: "表单",
+      title: "管理员",
       icon: "fa fa-bandcamp",
     },
     sub: [
       {
-        name: "FormRadio",
+        name: "developer_assign",
         meta: {
-          index: `/Home/FormRadio`,
-          title: "单选按钮",
+          index: `/Home/developer_assign`,
+          title: "新建工单",
           type: "menu",
           active: false,
         },
